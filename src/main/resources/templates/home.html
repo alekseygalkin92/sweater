@@ -4,7 +4,26 @@
         <title>Sweater</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
+
+
     <body>
-        <p th:text="'Hello, ' + ${name} + '!'" />
+        <div>
+            <form method="post" th:object="${message}">
+                <input type="text" name="text" placeholder="Enter text" th:field="*{text}" />
+                <input type="text" name="tag" placeholder="Enter tag" th:field="*{tag}" />
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+
+        <form method="post" action="filter" th:action="@{filter}">
+           <input type="text" name="filter" placeholder="Enter filter" />
+            <button type="submit">Filter</button>
+        </form>
+
+        <div>Messages: </div>
+        <ul th:each="mess : ${messageList}">
+            <li th:text="'ID: ' + ${mess.id} + ' Text: ' + ${mess.text} + ' Tag: ' + ${mess.tag}"></li>
+        </ul>
     </body>
 </html>
