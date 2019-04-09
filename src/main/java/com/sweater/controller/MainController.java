@@ -1,8 +1,10 @@
 package com.sweater.controller;
 
 import com.sweater.domain.Message;
+import com.sweater.domain.User;
 import com.sweater.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class MainController {
     @Autowired
     private MessageRepo messageRepo;
+
+    @GetMapping({"/", "/main"})
+    public String main() {
+        return "main";
+    }
 
     @GetMapping("/home")
     public String home(Model model) {
@@ -25,7 +32,8 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public String addMessage(@ModelAttribute Message message, Model model) {
+    public String addMessage(@AuthenticationPrincipal User user, @ModelAttribute Message message, Model model) {
+        message.setAuthor(user);
         messageRepo.save(message);
 
         model.addAttribute("messageList", messageRepo.findAll());
