@@ -19,9 +19,9 @@ public class MainController {
     @Autowired
     private MessageRepo messageRepo;
 
-    @GetMapping({"/", "/main"})
-    public String main() {
-        return "main";
+    @GetMapping("/")
+    public String greeting() {
+        return "greeting";
     }
 
     @GetMapping("/home")

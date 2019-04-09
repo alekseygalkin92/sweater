@@ -19,21 +19,22 @@
             </form>
         </div>
 
-
         <form method="post" action="filter" th:action="@{/filter}">
             <input type="text" name="filter" placeholder="Enter filter" />
             <button type="submit">Filter</button>
         </form>
 
-        <div>Messages: </div>
-        <ul th:each="mess : ${messageList}">
-            <div>
-                <li th:text="'ID: ' + ${mess.id} + ' Text: ' + ${mess.text} + ' Tag: ' + ${mess.tag}"></li>
-            </div>
-
-            <strong th:text="${mess.author?.username}"></strong>
-
-
-        </ul>
+        <div th:if="${messageList.empty}">
+            <div th:text="'You have 0 messages'">You have 0 messages</div>
+        </div>
+        <div th:unless="${messageList.empty}">
+            <div>Messages: </div>
+            <ul th:each="mess : ${messageList}">
+                <div>
+                    <li th:text="'ID: ' + ${mess.id} + ' Text: ' + ${mess.text} + ' Tag: ' + ${mess.tag}"></li>
+                </div>
+                <strong th:text="${mess.author?.username}"></strong>
+            </ul>
+        </div>
     </body>
 </html>
