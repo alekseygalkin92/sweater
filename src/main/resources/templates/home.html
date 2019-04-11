@@ -19,8 +19,8 @@
             </form>
         </div>
 
-        <form method="post" action="filter" th:action="@{/filter}">
-            <input type="text" name="filter" placeholder="Enter filter" />
+        <form method="get" action="/home" th:action="@{/home}">
+            <input type="text" name="filter" th:value="${filter}" placeholder="Enter filter" />
             <button type="submit">Filter</button>
         </form>
 
