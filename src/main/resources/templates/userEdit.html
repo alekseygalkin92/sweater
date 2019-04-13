@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Sweater</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <a th:href="@{/home}">To home</a>
+        <p>User editor</p>
+        <form th:action="@{/user}" method="post">
+            <input type="text" th:value="${user.username}" name="username"/>
+            <div th:each="role : ${roles}">
+                <label th:text="${role.name()}"></label><input type="checkbox" th:name="${role.name()}" th:checked="${user.roles.contains(role)}"/>
+            </div>
+            <input type="hidden" th:value="${user.id}" name = "userId">
+            <button type="submit">Save</button>
+        </form>
+    </body>
+</html>

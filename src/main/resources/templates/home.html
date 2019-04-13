@@ -4,13 +4,13 @@
         <title>Sweater</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
-
-    <div>
-        <form th:action="@{/logout}" action="/logout" method="post">
-            <input type="submit" value="Sign Out">
-        </form>
-    </div>
     <body>
+        <div>
+            <form th:action="@{/logout}" action="/logout" method="post">
+                <input type="submit" value="Sign Out">
+            </form>
+            <span><a th:href="@{/user}">User list</a></span>
+        </div>
         <div>
             <form method="post" th:action=@{/home} th:object="${message}">
                 <input type="text" name="text" placeholder="Enter text" th:field="*{text}" />
