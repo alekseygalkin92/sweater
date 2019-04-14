@@ -3,6 +3,7 @@
     <head>
         <title>Sweater</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
         <div>
@@ -12,14 +13,15 @@
             <span><a th:href="@{/user}">User list</a></span>
         </div>
         <div>
-            <form method="post" th:action=@{/home} th:object="${message}">
+            <form method="post" th:action=@{/main} th:object="${message}" enctype="multipart/form-data">
                 <input type="text" name="text" placeholder="Enter text" th:field="*{text}" />
                 <input type="text" name="tag" placeholder="Enter tag" th:field="*{tag}" />
+                <input type="file" name="file">
                 <button type="submit">Add</button>
             </form>
         </div>
 
-        <form method="get" action="/home" th:action="@{/home}">
+        <form method="get" action="/main" th:action="@{/main}">
             <input type="text" name="filter" th:value="${filter}" placeholder="Enter filter" />
             <button type="submit">Filter</button>
         </form>
@@ -34,6 +36,9 @@
                     <li th:text="'ID: ' + ${mess.id} + ' Text: ' + ${mess.text} + ' Tag: ' + ${mess.tag}"></li>
                 </div>
                 <strong th:text="${mess.author?.username}"></strong>
+                <div th:if="${mess.filename}">
+                    <img th:src="@{'/img/' + ${mess.filename}}">
+                </div>
             </ul>
         </div>
     </body>
