@@ -62,7 +62,7 @@ public class MainController {
             File uploadDir = new File(uploadPath);
 
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+                uploadDir.mkdirs();
             }
 
             String uuidFile = UUID.randomUUID().toString();

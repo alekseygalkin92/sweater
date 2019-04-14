@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-    <head>
-        <title>Sweater</title>
-        <link rel="stylesheet" href="/static/style.css">
+    <head th:replace="parts/common :: common_header(~{::title})">
+        <title>Sweater - Login</title>
     </head>
     <body>
         <div th:if="${param.error}">
@@ -18,5 +17,7 @@
             <div><input type="submit" value="Sign In"/></div>
         </form>
         <a th:href="@{/registration}" href="/registration">Add new user</a>
+
+        <th:block th:replace="parts/common :: common_js"></th:block>
     </body>
 </html>

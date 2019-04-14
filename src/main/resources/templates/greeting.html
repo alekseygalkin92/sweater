@@ -1,9 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Sweater</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link rel="stylesheet" href="/static/style.css">
+    <head th:replace="parts/common :: common_header(~{::title})">
+        <title>Sweater - Greeting</title>
     </head>
     <body>
         <div>
@@ -11,5 +9,7 @@
         </div>
 
         <a th:href="@{/main}">To main</a>
+
+        <th:block th:replace="parts/common :: common_js"></th:block>
     </body>
 </html>
