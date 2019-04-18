@@ -13,6 +13,12 @@
                 <input class="form-control" type="password" name="password"/>
             </div>
         </div>
+        <div th:if="${isRegisterForm}" class="form-group row">
+            <label class="col-sm-2 col-form-label">Email:</label>
+            <div class="col-sm-6">
+                <input class="form-control" type="email" name="email"/>
+            </div>
+        </div>
 
         <a th:if="${not isRegisterForm}" th:href="@{/registration}">Add new user</a>
         <button type="submit" class="btn btn-primary mb-2" th:text="${isRegisterForm} ? 'Create' : 'Sign In'"></button>

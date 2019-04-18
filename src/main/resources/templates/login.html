@@ -7,6 +7,8 @@
         <nav th:replace="parts/common :: common_navbar"></nav>
 
         <div class="container mt-5">
+            <div th:if="${message}" class="mb-1" th:text="${message}"></div>
+
             <div th:if="${param.error}" class="mb-1">
                 Invalid username and password.
             </div>
