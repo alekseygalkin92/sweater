@@ -4,40 +4,55 @@
         <title>Sweater - Main</title>
     </head>
     <body>
-        <div>
-            <form th:action="@{/logout}" action="/logout" method="post">
-                <input type="submit" value="Sign Out">
-            </form>
-            <span><a th:href="@{/user}">User list</a></span>
-        </div>
-        <div>
-            <form method="post" th:action=@{/main} th:object="${message}" enctype="multipart/form-data">
-                <input type="text" name="text" placeholder="Enter text" th:field="*{text}" />
-                <input type="text" name="tag" placeholder="Enter tag" th:field="*{tag}" />
-                <input type="file" name="file">
-                <button type="submit">Add</button>
-            </form>
-        </div>
+        <nav th:replace="parts/common :: common_navbar"></nav>
 
-        <form method="get" action="/main" th:action="@{/main}">
-            <input type="text" name="filter" th:value="${filter}" placeholder="Enter filter" />
-            <button type="submit">Filter</button>
-        </form>
+        <div class="container mt-5">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <form method="get" action="/main" th:action="@{/main}" class="form-inline">
+                        <input type="text" class="form-control" name="filter" th:value="${filter}" placeholder="Search by tag" />
+                        <button type="submit" class="btn btn-primary ml-2">Search</button>
+                    </form>
+                </div>
+            </div>
 
-        <div th:if="${messageList.empty}">
-            <div th:text="'You have 0 messages'">You have 0 messages</div>
-        </div>
-        <div th:unless="${messageList.empty}">
-            <div>Messages: </div>
-            <ul th:each="mess : ${messageList}">
-                <div>
-                    <li th:text="'ID: ' + ${mess.id} + ' Text: ' + ${mess.text} + ' Tag: ' + ${mess.tag}"></li>
+            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Add new message
+            </a>
+            <div class="collapse" id="collapseExample">
+                <div class="form-group mt-3">
+                    <form method="post" th:action=@{/main} th:object="${message}" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="text" placeholder="Enter text" th:field="*{text}" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="tag" placeholder="Enter tag" th:field="*{tag}" />
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file"  name="file" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
                 </div>
-                <strong th:text="${mess.author?.username}"></strong>
-                <div th:if="${mess.filename}">
-                    <img th:src="@{'/img/' + ${mess.filename}}">
+            </div>
+
+            <div class="card-columns">
+                <div class="card my-3" th:each="mess : ${messageList}">
+                    <div th:if="${mess.filename}">
+                        <img th:src="@{'/img/' + ${mess.filename}}" class="card-img-top">
+                    </div>
+                    <div class="m-2">
+                        <span th:text="${mess.text}"></span>
+                        <i th:text="${mess.tag}"></i>
+                    </div>
+                    <div th:text="${mess.author?.username}" class="card-footer text-muted"></div>
                 </div>
-            </ul>
+            </div>
         </div>
 
         <th:block th:replace="parts/common :: common_js"></th:block>

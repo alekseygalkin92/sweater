@@ -4,16 +4,25 @@
         <title>Sweater - User edit</title>
     </head>
     <body>
-        <a th:href="@{/main}">To main</a>
-        <p>User editor</p>
-        <form th:action="@{/user}" method="post">
-            <input type="text" th:value="${user.username}" name="username"/>
-            <div th:each="role : ${roles}">
-                <label th:text="${role.name()}"></label><input type="checkbox" th:name="${role.name()}" th:checked="${user.roles.contains(role)}"/>
-            </div>
-            <input type="hidden" th:value="${user.id}" name = "userId">
-            <button type="submit">Save</button>
-        </form>
+        <nav th:replace="parts/common :: common_navbar"></nav>
+
+        <div class="container mt-5">
+            <div class="mb-1">User editor</div>
+            <form th:action="@{/user}" method="post">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Username:</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" type="text" th:value="${user.username}" name="username"/>
+                    </div>
+                </div>
+                <div th:each="role : ${roles}" class="custom-control custom-checkbox">
+                    <input type="checkbox" th:id="${role.name()}" th:name="${role.name()}" th:checked="${user.roles.contains(role)}" class="custom-control-input" />
+                    <label th:text="${role.name()}" th:for="${role.name()}" class="custom-control-label"></label>
+                </div>
+                <input type="hidden" th:value="${user.id}" name = "userId">
+                <button type="submit" class="btn btn-primary mt-2">Save</button>
+            </form>
+        </div>
 
         <th:block th:replace="parts/common :: common_js"></th:block>
     </body>

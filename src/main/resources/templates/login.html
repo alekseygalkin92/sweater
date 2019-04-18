@@ -1,22 +1,20 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="parts/common :: common_header(~{::title})">
         <title>Sweater - Login</title>
     </head>
     <body>
-        <div th:if="${param.error}">
-            Invalid username and password.
+        <nav th:replace="parts/common :: common_navbar"></nav>
+
+        <div class="container mt-5">
+            <div th:if="${param.error}" class="mb-1">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="mb-1">
+                You have been logged out.
+            </div>
+            <form th:replace="parts/forms :: formLogin(@{/login}, false)"></form>
         </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
-        <form th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
-        </form>
-        <a th:href="@{/registration}" href="/registration">Add new user</a>
 
         <th:block th:replace="parts/common :: common_js"></th:block>
     </body>

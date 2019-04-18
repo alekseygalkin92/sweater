@@ -4,24 +4,26 @@
         <title>Sweater - User list</title>
     </head>
     <body>
-        <a th:href="@{/main}">To main</a>
-        <table border="1">
-            <caption>User list</caption>
-            <thead>
-                <tr>
-                    <th>User</th>
-                    <th>Roles</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.username}"></td>
-                    <td><span th:each="role : ${user.roles}" th:text="${role.name()} + ' '"></span></td>
-                    <td><a th:href="@{'/user/' + ${user.id}}">edit</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <nav th:replace="parts/common :: common_navbar"></nav>
+
+        <div class="container mt-5">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Roles</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.username}"></td>
+                        <td><span th:each="role : ${user.roles}" th:text="${role.name()} + ' '"></span></td>
+                        <td><a th:href="@{'/user/' + ${user.id}}">edit</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <th:block th:replace="parts/common :: common_js"></th:block>
     </body>

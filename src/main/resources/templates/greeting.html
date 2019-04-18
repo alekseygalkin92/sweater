@@ -4,11 +4,12 @@
         <title>Sweater - Greeting</title>
     </head>
     <body>
-        <div>
-            <h1>Welcome!</h1>
-        </div>
+        <nav th:replace="parts/common :: common_navbar"></nav>
 
-        <a th:href="@{/main}">To main</a>
+        <div class="container mt-5">
+            <h5>Hello, guest</h5>
+            <div>This is a simple clone of Twitter</div>
+        </div>
 
         <th:block th:replace="parts/common :: common_js"></th:block>
     </body>
