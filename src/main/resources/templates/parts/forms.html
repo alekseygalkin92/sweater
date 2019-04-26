@@ -1,22 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-    <form th:fragment="formLogin(path, isRegisterForm)" th:action="${path}" method="post">
+
+    <form th:fragment="formLogin(path, isRegisterForm)" th:action="${path}" method="post" th:object="${user}">
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label"> Username: </label>
+            <label class="col-sm-2 col-form-label">Username:</label>
             <div class="col-sm-6">
-                <input class="form-control" type="text" name="username"/>
+                <input type="text" name="username" th:field="*{username}"
+                       class="form-control" th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"/>
+                <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback"></div>
             </div>
         </div>
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Password:</label>
             <div class="col-sm-6">
-                <input class="form-control" type="password" name="password"/>
+                <input type="password" name="password" th:field="*{password}"
+                       class="form-control" th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"/>
+                <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="invalid-feedback"></div>
+            </div>
+        </div>
+        <div th:if="${isRegisterForm}" class="form-group row">
+            <label class="col-sm-2 col-form-label">Repeat password:</label>
+            <div class="col-sm-6">
+                <input type="password" name="password2" th:field="*{password2}"
+                       class="form-control" th:classappend="${#fields.hasErrors('password2')} ? 'is-invalid' : ''"/>
+                <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}" class="invalid-feedback"></div>
             </div>
         </div>
         <div th:if="${isRegisterForm}" class="form-group row">
             <label class="col-sm-2 col-form-label">Email:</label>
             <div class="col-sm-6">
-                <input class="form-control" type="email" name="email"/>
+                <input type="email" name="email" th:field="*{email}"
+                       class="form-control" th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"/>
+                <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="invalid-feedback"></div>
             </div>
         </div>
 

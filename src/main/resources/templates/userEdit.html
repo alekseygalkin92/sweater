@@ -7,6 +7,8 @@
         <nav th:replace="parts/common :: common_navbar"></nav>
 
         <div class="container mt-5">
+            <div th:if="${message}" th:text="${message}" class="alert alert-danger" role="alert"></div>
+
             <div class="mb-1">User editor</div>
             <form th:action="@{/user}" method="post">
                 <div class="form-group row">

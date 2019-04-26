@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -40,8 +41,16 @@ public class UserController {
     public String userSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
-            @RequestParam("userId") User user
+            @RequestParam("userId") User user,
+            Model model
     ) {
+
+        if (StringUtils.isEmpty(username)) {
+            model.addAttribute("message", "Username is empty");
+            model.addAttribute("user", user);
+            model.addAttribute("roles", Role.values());
+            return "userEdit";
+        }
 
         userService.saveUser(user, username, form);
 
@@ -60,7 +69,15 @@ public class UserController {
     public String updateProfile(
             @AuthenticationPrincipal User user,
             @RequestParam String password,
-            @RequestParam String email) {
+            @RequestParam String email,
+            Model model) {
+
+        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
+            model.addAttribute("message", "Password or email is empty");
+            model.addAttribute("username", user.getUsername());
+            model.addAttribute("email", user.getEmail());
+            return "profile";
+        }
 
         userService.updateProfile(user, password, email);
 

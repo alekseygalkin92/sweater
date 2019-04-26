@@ -19,11 +19,14 @@
             <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Add new message
             </a>
-            <div class="collapse" id="collapseExample">
+            <div class="collapse" th:classappend="${#fields.hasErrors('${message.*}')} ? 'show' : ''" id="collapseExample">
                 <div class="form-group mt-3">
                     <form method="post" th:action=@{/main} th:object="${message}" enctype="multipart/form-data">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="text" placeholder="Enter text" th:field="*{text}" />
+                            <input type="text" class="form-control" th:classappend="${#fields.hasErrors('text')} ? 'is-invalid' : ''"
+                                   name="text" placeholder="Enter text" th:field="*{text}" />
+                            <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}" class="invalid-feedback">
+                            </div>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-control" name="tag" placeholder="Enter tag" th:field="*{tag}" />
