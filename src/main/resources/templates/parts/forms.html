@@ -21,9 +21,9 @@
         <div th:if="${isRegisterForm}" class="form-group row">
             <label class="col-sm-2 col-form-label">Repeat password:</label>
             <div class="col-sm-6">
-                <input type="password" name="password2" th:field="*{password2}"
-                       class="form-control" th:classappend="${#fields.hasErrors('password2')} ? 'is-invalid' : ''"/>
-                <div th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}" class="invalid-feedback"></div>
+                <input type="password" name="password2"
+                       class="form-control" th:classappend="${message} ? 'is-invalid' : ''"/>
+                <div th:if="${message}" th:text="${message}" class="invalid-feedback"></div>
             </div>
         </div>
         <div th:if="${isRegisterForm}" class="form-group row">

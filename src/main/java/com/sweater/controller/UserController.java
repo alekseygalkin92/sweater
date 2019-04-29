@@ -72,8 +72,8 @@ public class UserController {
             @RequestParam String email,
             Model model) {
 
-        if (StringUtils.isEmpty(password) || StringUtils.isEmpty(email)) {
-            model.addAttribute("message", "Password or email is empty");
+        if (StringUtils.isEmpty(password) && email.equals(user.getEmail())) {
+            model.addAttribute("message", "Password is empty");
             model.addAttribute("username", user.getUsername());
             model.addAttribute("email", user.getEmail());
             return "profile";

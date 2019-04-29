@@ -69,7 +69,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActivationCode(null);
-        user.setPassword2("password2");                      // for passing the validation
+
         userRepo.save(user);
 
         return true;

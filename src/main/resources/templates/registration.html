@@ -9,7 +9,7 @@
 
         <div class="container mt-5">
             <div class="mb-1">Add new user</div>
-            <p th:if="${message}" th:text="${message}"></p>
+            <p th:if="${activationMessage}" th:text="${activationMessage}" class="alert alert-dark" role="alert"></p>
 
             <form th:replace="parts/forms :: formLogin(@{/registration}, true)"></form>
         </div>
