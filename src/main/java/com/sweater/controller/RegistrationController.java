@@ -35,10 +35,12 @@ public class RegistrationController {
     ) {
         if (StringUtils.isEmpty(passwordConfirm)) {
             model.addAttribute("message", "Password confirmation cannot be empty");
+            return "registration";
         }
 
         if (user.getPassword() != null && !user.getPassword().equals(passwordConfirm)) {
             model.addAttribute("message", "Passwords are different");
+            return "registration";
         }
 
         if (bindingResult.hasErrors()) {
