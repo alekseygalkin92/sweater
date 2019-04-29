@@ -1,8 +1,10 @@
 package com.sweater.controller;
 
 import com.sweater.domain.User;
+import com.sweater.domain.dto.CaptchResponseDto;
 import com.sweater.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -12,13 +14,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.util.Collections;
 
 @Controller
 public class RegistrationController {
+
+    private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${recaptcha.secret}")
+    private String secret;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -29,10 +42,18 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(
             @RequestParam("password2") String passwordConfirm,
+            @RequestParam("g-recaptcha-response") String captchaResponse,
             @Valid User user,
             BindingResult bindingResult,
             Model model
     ) {
+        String url = String.format(CAPTCHA_URL, secret, captchaResponse);
+        CaptchResponseDto response = restTemplate.postForObject(url, Collections.emptyList(), CaptchResponseDto.class);
+
+        if (!response.isSuccess()) {
+            model.addAttribute("captchaError", "Fill captcha");
+        }
+
         if (StringUtils.isEmpty(passwordConfirm)) {
             model.addAttribute("message", "Password confirmation cannot be empty");
             return "registration";
@@ -43,7 +64,7 @@ public class RegistrationController {
             return "registration";
         }
 
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || !response.isSuccess()) {
             return "registration";
         }
 
